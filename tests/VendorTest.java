@@ -103,4 +103,38 @@ public class VendorTest {
         assertEquals("Sorry, don't know that item", result);
     }
 
+    @Test
+    public void emptyCandyTest() {
+        Vending vendingCandy = new Vending(3,10);
+        vendingCandy.addMoney(10.00);
+        vendingCandy.select("Candy");
+        vendingCandy.select("Candy");
+        vendingCandy.select("Candy");
+        assertEquals(0, vendingCandy.getStock("Candy"));
+    }
+
+    @Test
+    public void emptyGumTest() {
+        Vending vendingGum = new Vending(10,3);
+        vendingGum.addMoney(10.00);
+        vendingGum.select("Gum");
+        vendingGum.select("Gum");
+        vendingGum.select("Gum");
+        assertEquals(0, vendingGum.getStock("Gum"));
+    }
+
+    @Test
+    public void emptyBothTest() {
+        Vending vendingBoth = new Vending(3,3);
+        vendingBoth.addMoney(10.00);
+        vendingBoth.select("Gum");
+        vendingBoth.select("Gum");
+        vendingBoth.select("Gum");
+        vendingBoth.select("Candy");
+        vendingBoth.select("Candy");
+        vendingBoth.select("Candy");
+        assertEquals(0, vendingBoth.getStock("Gum"));
+        assertEquals(0, vendingBoth.getStock("Candy"));
+    }
+
 }

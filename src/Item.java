@@ -16,4 +16,8 @@ class Item {
             this.stock = this.stock - amount;
         }
     }
+
+    int getStock() {
+        return this.stock;
+    }
 }

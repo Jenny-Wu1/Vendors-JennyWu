@@ -56,6 +56,14 @@ class Vending {
         }
         return "Sorry, don't know that item";
     }
+
+    int getStock(String name) {
+        if(Stock.containsKey(name)) {
+            return Stock.get(name).getStock();
+        }
+        return 0; //Return 0 for invalid items as well
+    }
+
 }
 
 class Examples {
