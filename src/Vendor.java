@@ -85,6 +85,25 @@ class Vending {
         }
     }
 
+    void changeItemName(String oldName, String newName) {
+        if (oldName.equals(newName)) {
+            System.out.println("No changes; The old name and new name are the same.");
+            return;
+        }
+        if(!Stock.containsKey(oldName)) {
+            System.out.println("The item named '" + oldName + "' doesn't exist, can't rename :(");
+            return;
+        }
+        if(Stock.containsKey(newName)) {
+            System.out.println("An item with the name '" + newName + "' already exists, can't rename :(");
+            return;
+        }
+
+        Item item = Stock.get(oldName);
+        Stock.put(newName, item);
+        Stock.remove(oldName);
+    }
+
 }
 
 class Examples {

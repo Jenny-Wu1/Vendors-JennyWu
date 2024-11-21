@@ -227,4 +227,30 @@ public class VendorTest {
         assertEquals(10, vendingMachine.getStock("Chips"));
     }
 
+    @Test
+    public void changeItemNameSuccessfully() {
+        vendingMachine.changeItemName("Gum", "Chocolates");
+        assertEquals(10, vendingMachine.getStock("Chocolates"));
+        assertEquals(0, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void changeItemNameOldNameDNE() {
+        vendingMachine.changeItemName("Juice", "Matcha");
+        assertEquals(0, vendingMachine.getStock("Matcha"));
+    }
+
+    @Test
+    public void changeItemNameNewNameExists() {
+        vendingMachine.changeItemName("Gum", "Candy");
+        assertEquals(10, vendingMachine.getStock("Gum"));
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void changeItemNameSameName() {
+        vendingMachine.changeItemName("Candy", "Candy");
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
 }
