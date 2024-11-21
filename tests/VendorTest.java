@@ -99,7 +99,7 @@ public class VendorTest {
     @Test
     public void inValidItemPurchaseTest() {
         vendingMachine.addMoney(5.00);
-        String result = vendingMachine.select("Chips");
+        String result = vendingMachine.select("Twix");
         assertEquals("Sorry, don't know that item", result);
     }
 
@@ -219,6 +219,12 @@ public class VendorTest {
     public void restockNegativeMinGum() {
         vendingMachine.restock("Gum", Integer.MIN_VALUE);
         assertEquals(10, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockNewItemTest() {
+        vendingMachine.restock("Chips", 10, 1.00);
+        assertEquals(10, vendingMachine.getStock("Chips"));
     }
 
 }

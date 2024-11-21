@@ -79,6 +79,12 @@ class Vending {
         }
     }
 
+    void restock(String name, int amount, double price) {
+        if (amount > 0){
+            Stock.put(name, new Item(price, amount));
+        }
+    }
+
 }
 
 class Examples {
