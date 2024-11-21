@@ -54,4 +54,53 @@ public class VendorTest {
         assertEquals(0.00, vendingMachine.getBalance());
     }
 
+    @Test
+    public void candyPurchaseTest() {
+        vendingMachine.addMoney(5.00);
+        String result = vendingMachine.select("Candy");
+        assertEquals("Purchase successful!", result);
+    }
+
+    @Test
+    public void gumPurchaseTest() {
+        vendingMachine.addMoney(5.00);
+        String result = vendingMachine.select("Gum");
+        assertEquals("Purchase successful!", result);
+    }
+
+    @Test
+    public void insufficientMoneyCandyPurchaseTest() {
+        String result = vendingMachine.select("Candy");
+        assertEquals("Gimme more money", result);
+    }
+
+    @Test
+    public void insufficientMoneyGumPurchaseTest() {
+        String result = vendingMachine.select("Gum");
+        assertEquals("Gimme more money", result);
+    }
+
+    @Test
+    public void outOfStockCandyPurchaseTest() {
+        Vending vendingMachineCandy = new Vending(0, 10);
+        vendingMachineCandy.addMoney(5.00);
+        String result = vendingMachineCandy.select("Candy");
+        assertEquals("Out of Stock :(", result);
+    }
+
+    @Test
+    public void outOfStockGumPurchaseTest() {
+        Vending vendingMachineGum = new Vending(10, 0);
+        vendingMachineGum.addMoney(5.00);
+        String result = vendingMachineGum.select("Gum");
+        assertEquals("Out of Stock :(", result);
+    }
+
+    @Test
+    public void inValidItemPurchaseTest() {
+        vendingMachine.addMoney(5.00);
+        String result = vendingMachine.select("Chips");
+        assertEquals("Sorry, don't know that item", result);
+    }
+
 }

@@ -12,6 +12,8 @@ class Item {
     }
 
     void purchase(int amount) {
-        this.stock = this.stock - amount;
+        if (this.stock >= amount) {
+            this.stock = this.stock - amount;
+        }
     }
 }
