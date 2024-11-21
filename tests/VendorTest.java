@@ -137,4 +137,88 @@ public class VendorTest {
         assertEquals(0, vendingBoth.getStock("Candy"));
     }
 
+    @Test
+    public void restockPositive10Candy() {
+        vendingMachine.restock("Candy", 10);
+        assertEquals(20, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockPositive100Candy() {
+        vendingMachine.restock("Candy", 100);
+        assertEquals(110, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockPositiveMaxCandy() {
+        vendingMachine.restock("Candy", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restock0Candy() {
+        vendingMachine.restock("Candy", 0);
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockNegative10Candy() {
+        vendingMachine.restock("Candy", -10);
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockNegative100Candy() {
+        vendingMachine.restock("Candy", -100);
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockNegativeMinCandy() {
+        vendingMachine.restock("Candy", Integer.MIN_VALUE);
+        assertEquals(10, vendingMachine.getStock("Candy"));
+    }
+
+    @Test
+    public void restockPositive10Gum() {
+        vendingMachine.restock("Gum", 10);
+        assertEquals(20, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockPositive100Gum() {
+        vendingMachine.restock("Gum", 100);
+        assertEquals(110, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockPositiveMaxGum() {
+        vendingMachine.restock("Gum", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restock0Gum() {
+        vendingMachine.restock("Gum", 0);
+        assertEquals(10, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockNegative10Gum() {
+        vendingMachine.restock("Gum", -10);
+        assertEquals(10, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockNegative100Gum() {
+        vendingMachine.restock("Gum", -100);
+        assertEquals(10, vendingMachine.getStock("Gum"));
+    }
+
+    @Test
+    public void restockNegativeMinGum() {
+        vendingMachine.restock("Gum", Integer.MIN_VALUE);
+        assertEquals(10, vendingMachine.getStock("Gum"));
+    }
+
 }

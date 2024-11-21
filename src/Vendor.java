@@ -64,6 +64,21 @@ class Vending {
         return 0; //Return 0 for invalid items as well
     }
 
+    void restock(String name, int amount) {
+        if(Stock.containsKey(name)) {
+            if (amount > 0) {
+                Item item = Stock.get(name);
+                int currentStock = item.getStock();
+
+                if(currentStock + amount > Integer.MAX_VALUE || currentStock + amount < 0) {
+                    item.restock(Integer.MAX_VALUE - currentStock);
+                } else {
+                    item.restock(amount);
+                }
+            }
+        }
+    }
+
 }
 
 class Examples {
