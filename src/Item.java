@@ -4,21 +4,24 @@ class Item {
     boolean discontinued;
     int purchaseCount;
     String description;
+    double discount;
 
     Item(double price, int numPieces, String description) {
         this.price = price;
         this.stock = numPieces;
-        this.discontinued = false;
-        this.purchaseCount = 0;
+        discontinued = false;
+        purchaseCount = 0;
         this.description = description;
+        discount = 0;
     }
 
     Item(double price, int numPieces) {
         this.price = price;
         this.stock = numPieces;
-        this.discontinued = false;
+        discontinued = false;
         this.purchaseCount = 0;
         this.description = "Snack/Drink";
+        discount = 0;
     }
 
     void restock(int amount) {
@@ -50,5 +53,15 @@ class Item {
 
     String getDescription() {
         return description;
+    }
+
+    void applyDiscount(double discount) {
+        if (discount >= 0 && discount <= 100) {
+            this.discount = discount;
+        }
+    }
+
+    double getDiscountedPrice() {
+        return price * (1 - discount / 100);
     }
 }

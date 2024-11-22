@@ -46,10 +46,11 @@ class Vending {
     String buy (String name) {
         if (Stock.containsKey(name)) {
             Item item = Stock.get(name);
-            if (balance >= item.price) {
+            double discountedPrice = item.getDiscountedPrice();
+            if (balance >= discountedPrice) {
                 if (item.stock > 0) {
                     item.purchase(1);
-                    this.balance = this.balance - item.price;
+                    this.balance = this.balance - discountedPrice;
                     return "Purchase successful!";
                 } else {
                     return "Out of Stock :(";
@@ -185,6 +186,14 @@ class Vending {
             return "Description: " + item.getDescription() + "\nPrice: $" + item.price + "\nStock: " + item.getStock() + " units left";
         }
         return name + " doesn't exist :(";
+    }
+
+    void applyDiscount(String itemName, double discount) {
+        if (Stock.containsKey(itemName)) {
+            Stock.get(itemName).applyDiscount(discount);
+        } else {
+            System.out.println(itemName + " doesn't exist :(");
+        }
     }
 
 }

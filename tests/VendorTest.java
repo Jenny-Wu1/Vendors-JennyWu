@@ -389,4 +389,34 @@ public class VendorTest {
         String details = vendor.getItemDetails("Twix");
         assertTrue(details.contains("Snack/Drink"));
     }
+
+    @Test
+    public void discount50PercentCandyTest() {
+        vendor.applyDiscount("Candy", 50);
+        Item candy = vendor.Stock.get("Candy");
+        assertEquals(0.625, candy.getDiscountedPrice());
+    }
+
+    @Test
+    public void purchaseDiscount50PercentCandyTest() {
+        vendor.addMoney(1.00);
+        vendor.applyDiscount("Candy", 50);
+        vendor.buy("Candy");
+        assertEquals(0.375, vendor.getBalance());
+    }
+
+    @Test
+    public void tooMuchDiscountTest() {
+        vendor.applyDiscount("Candy", 110);
+        Item candy = vendor.Stock.get("Candy");
+        assertEquals(1.25, candy.getDiscountedPrice());
+    }
+
+    @Test
+    public void negativeDiscountTest() {
+        vendor.applyDiscount("Candy", -5);
+        Item candy = vendor.Stock.get("Candy");
+        assertEquals(1.25, candy.getDiscountedPrice());
+    }
+
 }
