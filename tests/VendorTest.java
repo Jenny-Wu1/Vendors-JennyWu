@@ -360,4 +360,33 @@ public class VendorTest {
         String result = vendor.getMostPopular();
         assertEquals("The most popular item(s): Candy, Gum with 4 purchases!", result);
     }
+
+    @Test
+    public void getCandyDetailTest() {
+        String details = vendor.getItemDetails("Candy");
+        assertTrue(details.contains("Perfect little sweet treat!"));
+        assertTrue(details.contains("Price: $1.25"));
+        assertTrue(details.contains("Stock: 10 units left"));
+    }
+
+    @Test
+    public void getGumDetailTest() {
+        String details = vendor.getItemDetails("Gum");
+        assertTrue(details.contains("Refreshing gum!"));
+        assertTrue(details.contains("Price: $0.5"));
+        assertTrue(details.contains("Stock: 10 units left"));
+    }
+
+    @Test
+    public void getNonexistentItemDetailTest() {
+        String details = vendor.getItemDetails("Twix");
+        assertTrue(details.contains("Twix doesn't exist :("));
+    }
+
+    @Test
+    public void getDefaultDetailTest() {
+        vendor.restock("Twix", 10, 1.00);
+        String details = vendor.getItemDetails("Twix");
+        assertTrue(details.contains("Snack/Drink"));
+    }
 }

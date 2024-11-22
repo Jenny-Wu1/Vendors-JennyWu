@@ -3,12 +3,22 @@ class Item {
     int stock;
     boolean discontinued;
     int purchaseCount;
+    String description;
+
+    Item(double price, int numPieces, String description) {
+        this.price = price;
+        this.stock = numPieces;
+        this.discontinued = false;
+        this.purchaseCount = 0;
+        this.description = description;
+    }
 
     Item(double price, int numPieces) {
         this.price = price;
         this.stock = numPieces;
         this.discontinued = false;
         this.purchaseCount = 0;
+        this.description = "Snack/Drink";
     }
 
     void restock(int amount) {
@@ -36,5 +46,9 @@ class Item {
 
     void setDiscontinued(boolean discontinued) {
         this.discontinued = discontinued;
+    }
+
+    String getDescription() {
+        return description;
     }
 }

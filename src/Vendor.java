@@ -13,8 +13,8 @@ class Vending {
 
     Vending(int numCandy, int numGum) {
         this.Stock = new HashMap<>();
-        Stock.put("Candy", new Item(1.25, numCandy));
-        Stock.put("Gum", new Item(.5, numGum));
+        Stock.put("Candy", new Item(1.25, numCandy, "Perfect little sweet treat!"));
+        Stock.put("Gum", new Item(0.50, numGum, "Refreshing gum!"));
         this.balance = 0;
     }
 
@@ -177,6 +177,14 @@ class Vending {
         } else {
             return "The most popular item(s): " + String.join(", ", popularItems) + " with " + maxPurchases + " purchases!";
         }
+    }
+
+    String getItemDetails(String name) {
+        if (Stock.containsKey(name)) {
+            Item item = Stock.get(name);
+            return "Description: " + item.getDescription() + "\nPrice: $" + item.price + "\nStock: " + item.getStock() + " units left";
+        }
+        return name + " doesn't exist :(";
     }
 
 }
