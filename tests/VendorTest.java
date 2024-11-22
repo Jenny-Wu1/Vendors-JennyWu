@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VendorTest {
 
@@ -284,4 +283,49 @@ public class VendorTest {
         assertTrue(result.contains("Gum: 5 available"));
     }
 
+    @Test
+    public void removeNoStockCandyTest() {
+        Vending vendor1 = new Vending(0,0);
+        vendor1.removeItem("Candy");
+        vendor1.getInventory();
+        assertFalse(vendor1.getInventory().contains("Candy"));
+    }
+
+    @Test
+    public void removeNoStockGumTest() {
+        Vending vendor1 = new Vending(0,0);
+        vendor1.removeItem("Gum");
+        vendor1.getInventory();
+        assertFalse(vendor1.getInventory().contains("Gum"));
+    }
+
+    @Test
+    public void removeInStockItemTest() {
+        String result = vendor.removeItem("Candy");
+        assertEquals("Candy is still in stock!", result);
+    }
+
+    @Test
+    public void removeDiscontinuedCandyTest() {
+        Item candy = vendor.Stock.get("Candy");
+        candy.setDiscontinued(true);
+        vendor.removeItem("Candy");
+        vendor.getInventory();
+        assertFalse(vendor.getInventory().contains("Candy"));
+    }
+
+    @Test
+    public void removeDiscontinuedGumTest() {
+        Item candy = vendor.Stock.get("Candy");
+        candy.setDiscontinued(true);
+        vendor.removeItem("Candy");
+        vendor.getInventory();
+        assertFalse(vendor.getInventory().contains("Candy"));
+    }
+
+    @Test
+    public void removeNonexistentItemTest() {
+        String result = vendor.removeItem("Cola");
+        assertEquals("Cola doesn't exist :(", result);
+    }
 }
