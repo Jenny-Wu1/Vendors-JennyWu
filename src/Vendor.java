@@ -4,13 +4,21 @@ import java.util.List;
 
 
 /**
- * Class for a Vending Machine.  Contains a hashtable mapping item names to item data, as
- * well as the current balance of money that has been deposited into the machine.
+ * This class represents a vending machine containing a collection of items. It tracks the available stock of items,
+ * manages, the balance of money added, and provides methods for purchasing items, restocking inventory,
+ * applying discounts to items, and managing bestseller items. The vending machine uses a HashMa to store the items,
+ * and each item is represented by an Item object.
  */
 class Vending {
     HashMap<String, Item> Stock = new HashMap<String,Item>();
     private double balance;
 
+    /**
+     * Constructor for the class with a specified amounts of candy and gum and initializes the stock with the
+     * two items and their respective prices and descriptions.
+     * @param numCandy
+     * @param numGum
+     */
     Vending(int numCandy, int numGum) {
         this.Stock = new HashMap<>();
         Stock.put("Candy", new Item(1.25, numCandy, "Perfect little sweet treat!"));
@@ -18,30 +26,29 @@ class Vending {
         this.balance = 0;
     }
 
-    /** resets the Balance to 0 */
-    void resetBalance () {
-        this.balance = 0;
-    }
-
-    /** returns the current balance */
+    /**
+     * Gets the current balance of money in the vending machine.
+     * @return the current balance
+     */
     double getBalance () {
         return this.balance;
     }
 
-    /** adds money to the machine's balance
-     * @param amt how much money to add
-     * */
+    /**
+     * Adds money to the vending machine's balance.
+     * @param amt the amount of money to add
+     */
     void addMoney (double amt) {
         if (amt > 0) {
             this.balance = this.balance + amt;
         }
     }
 
-    /** attempt to purchase named item.  Message returned if
-     * the balance isn't sufficient to cover the item cost.
-     *
-     * @param name The name of the item to purchase ("Candy" or "Gum")
-     * @return A string
+    /**
+     * Purchases an item from the vending machine if the balance is sufficient and the item is in stock, then
+     * the balance is updated.
+     * @param name the name of the item to buy
+     * @return a message that indicates the results of the purchase
      */
     String buy (String name) {
         if (Stock.containsKey(name)) {
@@ -64,9 +71,9 @@ class Vending {
 
 
     /**
-     *
-     * @param name
-     * @return
+     * Gets the current stock of the specified item
+     * @param name the name of the item
+     * @return the number of units of the item in stock, or 0 if the item doesn't exist
      */
     int getStock(String name) {
         if(Stock.containsKey(name)) {
@@ -77,9 +84,9 @@ class Vending {
 
 
     /**
-     *
-     * @param name
-     * @param amount
+     * Restocks the specified item with a given amount.
+     * @param name the name of the item to restock
+     * @param amount the number of units of the item to add to the stock
      */
     void restock(String name, int amount) {
         if(Stock.containsKey(name)) {
@@ -98,10 +105,10 @@ class Vending {
 
 
     /**
-     *
-     * @param name
-     * @param amount
-     * @param price
+     * Restocks the specified item with a given amount and price. Used to add new items to th inventory.
+     * @param name the name of the item to restock
+     * @param amount the number of units of the item to add to the stock
+     * @param price the price of the item
      */
     void restock(String name, int amount, double price) {
         if (amount > 0){
@@ -111,9 +118,10 @@ class Vending {
 
 
     /**
-     *
-     * @param oldName
-     * @param newName
+     * Changes the name of an existing item in the vending machine while retaining the rest of its original information
+     * (stock and price).
+     * @param oldName the current name of the item
+     * @param newName the new name for the item
      */
     void changeItemName(String oldName, String newName) {
         if (oldName.equals(newName)) {
@@ -134,6 +142,10 @@ class Vending {
         Stock.remove(oldName);
     }
 
+    /**
+     * Gets the inventory of the vending machine, listing the names and stock quantities for all the items.
+     * @return a string containing the item names and their available quantities
+     */
     String getInventory() {
         String result = "";
         for (String itemName : Stock.keySet()) {
@@ -143,6 +155,11 @@ class Vending {
         return result;
     }
 
+    /**
+     * Removes an item from the vending machine's inventory if it is discontinued or out of stock.
+     * @param name the name of the item to remove
+     * @return a message indicating the results of the removal
+     */
     String removeItem(String name) {
         if(Stock.containsKey(name)) {
             Item item = Stock.get(name);
@@ -157,6 +174,11 @@ class Vending {
         }
     }
 
+    /**
+     * Gets the most popular item(s) in the vending machine based on their purchase count
+     * @return a string containing the most popular item(s) and their purchase count, or a message
+     *         indicating no purchases
+     */
     String getMostPopular() {
         int maxPurchases = -1;
         List<String> popularItems = new ArrayList<>();
@@ -180,6 +202,11 @@ class Vending {
         }
     }
 
+    /**
+     * Gets detailed information about a specific item, including its description, price, and stock.
+     * @param name the name of the item to get details for
+     * @return a string containing the item's description, price, and stock or a message if the item doesn't exist
+     */
     String getItemDetails(String name) {
         if (Stock.containsKey(name)) {
             Item item = Stock.get(name);
@@ -188,6 +215,11 @@ class Vending {
         return name + " doesn't exist :(";
     }
 
+    /**
+     * Applies a discount to the specified item
+     * @param itemName the name of the item to apply the discount to
+     * @param discount the discount percentage to apply (0-100)
+     */
     void applyDiscount(String itemName, double discount) {
         if (Stock.containsKey(itemName)) {
             Stock.get(itemName).applyDiscount(discount);
@@ -196,6 +228,10 @@ class Vending {
         }
     }
 
+    /**
+     * Marks the specified item as a bestseller
+     * @param itemName the name of the item to mark as a bestseller
+     */
     void markBestSeller(String itemName) {
         if (Stock.containsKey(itemName)) {
             Stock.get(itemName).setBestseller(true);
@@ -204,6 +240,11 @@ class Vending {
         }
     }
 
+    /**
+     * Automatically marks an item as a bestseller if the amount of purchases is equal to or surpass a
+     * specified amount
+     * @param threshold the specified amount of purchases that determine if an item is a bestseller or not
+     */
     void updateBestsellers(int threshold) {
         for (String itemName : Stock.keySet()) {
             Item item = Stock.get(itemName);
@@ -215,6 +256,4 @@ class Vending {
 
 }
 
-class Examples {
-}
 
