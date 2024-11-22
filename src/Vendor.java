@@ -6,10 +6,11 @@ import java.util.HashMap;
  * well as the current balance of money that has been deposited into the machine.
  */
 class Vending {
-    private static HashMap<String, Item> Stock = new HashMap<String,Item>();
+    private HashMap<String, Item> Stock = new HashMap<String,Item>();
     private double balance;
 
     Vending(int numCandy, int numGum) {
+        this.Stock = new HashMap<>();
         Stock.put("Candy", new Item(1.25, numCandy));
         Stock.put("Gum", new Item(.5, numGum));
         this.balance = 0;
@@ -38,6 +39,7 @@ class Vending {
      * the balance isn't sufficient to cover the item cost.
      *
      * @param name The name of the item to purchase ("Candy" or "Gum")
+     * @return A string
      */
     String select (String name) {
         if (Stock.containsKey(name)) {
@@ -57,6 +59,12 @@ class Vending {
         return "Sorry, don't know that item";
     }
 
+
+    /**
+     *
+     * @param name
+     * @return
+     */
     int getStock(String name) {
         if(Stock.containsKey(name)) {
             return Stock.get(name).getStock();
@@ -64,6 +72,12 @@ class Vending {
         return 0; //Return 0 for invalid items as well
     }
 
+
+    /**
+     *
+     * @param name
+     * @param amount
+     */
     void restock(String name, int amount) {
         if(Stock.containsKey(name)) {
             if (amount > 0) {
@@ -79,12 +93,25 @@ class Vending {
         }
     }
 
+
+    /**
+     *
+     * @param name
+     * @param amount
+     * @param price
+     */
     void restock(String name, int amount, double price) {
         if (amount > 0){
             Stock.put(name, new Item(price, amount));
         }
     }
 
+
+    /**
+     *
+     * @param oldName
+     * @param newName
+     */
     void changeItemName(String oldName, String newName) {
         if (oldName.equals(newName)) {
             System.out.println("No changes; The old name and new name are the same.");
@@ -102,6 +129,15 @@ class Vending {
         Item item = Stock.get(oldName);
         Stock.put(newName, item);
         Stock.remove(oldName);
+    }
+
+    String getInventory() {
+        String result = "";
+        for (String itemName : Stock.keySet()) {
+            Item item = Stock.get(itemName);
+            result = result + itemName + ": " + item.getStock() + " available\n";
+        }
+        return result;
     }
 
 }

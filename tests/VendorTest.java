@@ -2,104 +2,105 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VendorTest {
 
-    static Vending vendingMachine;
+    static Vending vendor;
 
     @BeforeEach
     public void setUp(){
-        vendingMachine = new Vending(10,10);
+        vendor = new Vending(10,10);
     }
 
     @Test
     public void addPositive5MoneyTest() {
-        vendingMachine.addMoney(5.00);
-        assertEquals(5.00, vendingMachine.getBalance());
+        vendor.addMoney(5.00);
+        assertEquals(5.00, vendor.getBalance());
     }
 
     @Test
     public void addPositive100MoneyTest() {
-        vendingMachine.addMoney(100.00);
-        assertEquals(100.00, vendingMachine.getBalance());
+        vendor.addMoney(100.00);
+        assertEquals(100.00, vendor.getBalance());
     }
 
     @Test
     public void addPositiveMaxMoneyTest() {
-        vendingMachine.addMoney(Double.MAX_VALUE);
-        assertEquals(Double.MAX_VALUE, vendingMachine.getBalance());
+        vendor.addMoney(Double.MAX_VALUE);
+        assertEquals(Double.MAX_VALUE, vendor.getBalance());
     }
 
     @Test
     public void addNoMoneyTest() {
-        vendingMachine.addMoney(0.00);
-        assertEquals(0.00, vendingMachine.getBalance());
+        vendor.addMoney(0.00);
+        assertEquals(0.00, vendor.getBalance());
     }
 
     @Test
     public void addNegative1MoneyTest() {
-        vendingMachine.addMoney(-1.00);
-        assertEquals(0.00, vendingMachine.getBalance());
+        vendor.addMoney(-1.00);
+        assertEquals(0.00, vendor.getBalance());
     }
 
     @Test
     public void addNegative100MoneyTest() {
-        vendingMachine.addMoney(-100.00);
-        assertEquals(0.00, vendingMachine.getBalance());
+        vendor.addMoney(-100.00);
+        assertEquals(0.00, vendor.getBalance());
     }
 
     @Test
     public void addNegativeMinTest() {
-        vendingMachine.addMoney(-Double.MIN_VALUE);
-        assertEquals(0.00, vendingMachine.getBalance());
+        vendor.addMoney(-Double.MIN_VALUE);
+        assertEquals(0.00, vendor.getBalance());
     }
 
     @Test
     public void candyPurchaseTest() {
-        vendingMachine.addMoney(5.00);
-        String result = vendingMachine.select("Candy");
+        vendor.addMoney(5.00);
+        String result = vendor.select("Candy");
         assertEquals("Purchase successful!", result);
     }
 
     @Test
     public void gumPurchaseTest() {
-        vendingMachine.addMoney(5.00);
-        String result = vendingMachine.select("Gum");
+        vendor.addMoney(5.00);
+        String result = vendor.select("Gum");
         assertEquals("Purchase successful!", result);
     }
 
     @Test
     public void insufficientMoneyCandyPurchaseTest() {
-        String result = vendingMachine.select("Candy");
+        String result = vendor.select("Candy");
         assertEquals("Gimme more money", result);
     }
 
     @Test
     public void insufficientMoneyGumPurchaseTest() {
-        String result = vendingMachine.select("Gum");
+        String result = vendor.select("Gum");
         assertEquals("Gimme more money", result);
     }
 
     @Test
     public void outOfStockCandyPurchaseTest() {
-        Vending vendingMachineCandy = new Vending(0, 10);
-        vendingMachineCandy.addMoney(5.00);
-        String result = vendingMachineCandy.select("Candy");
+        Vending vendorCandy = new Vending(0, 10);
+        vendorCandy.addMoney(5.00);
+        String result = vendorCandy.select("Candy");
         assertEquals("Out of Stock :(", result);
     }
 
     @Test
     public void outOfStockGumPurchaseTest() {
-        Vending vendingMachineGum = new Vending(10, 0);
-        vendingMachineGum.addMoney(5.00);
-        String result = vendingMachineGum.select("Gum");
+        Vending vendorGum = new Vending(10, 0);
+        vendorGum.addMoney(5.00);
+        String result = vendorGum.select("Gum");
         assertEquals("Out of Stock :(", result);
     }
 
     @Test
     public void inValidItemPurchaseTest() {
-        vendingMachine.addMoney(5.00);
-        String result = vendingMachine.select("Twix");
+        vendor.addMoney(5.00);
+        String result = vendor.select("Twix");
         assertEquals("Sorry, don't know that item", result);
     }
 
@@ -139,118 +140,148 @@ public class VendorTest {
 
     @Test
     public void restockPositive10Candy() {
-        vendingMachine.restock("Candy", 10);
-        assertEquals(20, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", 10);
+        assertEquals(20, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockPositive100Candy() {
-        vendingMachine.restock("Candy", 100);
-        assertEquals(110, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", 100);
+        assertEquals(110, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockPositiveMaxCandy() {
-        vendingMachine.restock("Candy", Integer.MAX_VALUE);
-        assertEquals(Integer.MAX_VALUE, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, vendor.getStock("Candy"));
     }
 
     @Test
     public void restock0Candy() {
-        vendingMachine.restock("Candy", 0);
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", 0);
+        assertEquals(10, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockNegative10Candy() {
-        vendingMachine.restock("Candy", -10);
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", -10);
+        assertEquals(10, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockNegative100Candy() {
-        vendingMachine.restock("Candy", -100);
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", -100);
+        assertEquals(10, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockNegativeMinCandy() {
-        vendingMachine.restock("Candy", Integer.MIN_VALUE);
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.restock("Candy", Integer.MIN_VALUE);
+        assertEquals(10, vendor.getStock("Candy"));
     }
 
     @Test
     public void restockPositive10Gum() {
-        vendingMachine.restock("Gum", 10);
-        assertEquals(20, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", 10);
+        assertEquals(20, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockPositive100Gum() {
-        vendingMachine.restock("Gum", 100);
-        assertEquals(110, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", 100);
+        assertEquals(110, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockPositiveMaxGum() {
-        vendingMachine.restock("Gum", Integer.MAX_VALUE);
-        assertEquals(Integer.MAX_VALUE, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, vendor.getStock("Gum"));
     }
 
     @Test
     public void restock0Gum() {
-        vendingMachine.restock("Gum", 0);
-        assertEquals(10, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", 0);
+        assertEquals(10, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockNegative10Gum() {
-        vendingMachine.restock("Gum", -10);
-        assertEquals(10, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", -10);
+        assertEquals(10, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockNegative100Gum() {
-        vendingMachine.restock("Gum", -100);
-        assertEquals(10, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", -100);
+        assertEquals(10, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockNegativeMinGum() {
-        vendingMachine.restock("Gum", Integer.MIN_VALUE);
-        assertEquals(10, vendingMachine.getStock("Gum"));
+        vendor.restock("Gum", Integer.MIN_VALUE);
+        assertEquals(10, vendor.getStock("Gum"));
     }
 
     @Test
     public void restockNewItemTest() {
-        vendingMachine.restock("Chips", 10, 1.00);
-        assertEquals(10, vendingMachine.getStock("Chips"));
+        vendor.restock("Chips", 10, 1.00);
+        assertEquals(10, vendor.getStock("Chips"));
     }
 
     @Test
     public void changeItemNameSuccessfully() {
-        vendingMachine.changeItemName("Gum", "Chocolates");
-        assertEquals(10, vendingMachine.getStock("Chocolates"));
-        assertEquals(0, vendingMachine.getStock("Gum"));
+        vendor.changeItemName("Gum", "Chocolates");
+        assertEquals(10, vendor.getStock("Chocolates"));
+        assertEquals(0, vendor.getStock("Gum"));
     }
 
     @Test
     public void changeItemNameOldNameDNE() {
-        vendingMachine.changeItemName("Juice", "Matcha");
-        assertEquals(0, vendingMachine.getStock("Matcha"));
+        vendor.changeItemName("Juice", "Matcha");
+        assertEquals(0, vendor.getStock("Matcha"));
     }
 
     @Test
     public void changeItemNameNewNameExists() {
-        vendingMachine.changeItemName("Gum", "Candy");
-        assertEquals(10, vendingMachine.getStock("Gum"));
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.changeItemName("Gum", "Candy");
+        assertEquals(10, vendor.getStock("Gum"));
+        assertEquals(10, vendor.getStock("Candy"));
     }
 
     @Test
     public void changeItemNameSameName() {
-        vendingMachine.changeItemName("Candy", "Candy");
-        assertEquals(10, vendingMachine.getStock("Candy"));
+        vendor.changeItemName("Candy", "Candy");
+        assertEquals(10, vendor.getStock("Candy"));
+    }
+
+    @Test
+    public void printInventory5Test() {
+        VendorManager manager = new VendorManager();
+        Vending vendor2 = new Vending(2, 2);
+        Vending vendor3 = new Vending(3, 3);
+        Vending vendor4 = new Vending(4, 4);
+        Vending vendor5 = new Vending(5, 5);
+        manager.addVendor("Vendor1", vendor);
+        manager.addVendor("Vendor2", vendor2);
+        manager.addVendor("Vendor3", vendor3);
+        manager.addVendor("Vendor4", vendor4);
+        manager.addVendor("Vendor5", vendor5);
+        String result = manager.printInventories();
+        assertTrue(result.contains("Vendor1:"));
+        assertTrue(result.contains("Candy: 10 available"));
+        assertTrue(result.contains("Gum: 10 available"));
+        assertTrue(result.contains("Vendor2:"));
+        assertTrue(result.contains("Candy: 2 available"));
+        assertTrue(result.contains("Gum: 2 available"));
+        assertTrue(result.contains("Vendor3:"));
+        assertTrue(result.contains("Candy: 3 available"));
+        assertTrue(result.contains("Gum: 3 available"));
+        assertTrue(result.contains("Vendor4:"));
+        assertTrue(result.contains("Candy: 4 available"));
+        assertTrue(result.contains("Gum: 3 available"));
+        assertTrue(result.contains("Vendor5:"));
+        assertTrue(result.contains("Candy: 5 available"));
+        assertTrue(result.contains("Gum: 5 available"));
     }
 
 }
