@@ -57,26 +57,26 @@ public class VendorTest {
     @Test
     public void candyPurchaseTest() {
         vendor.addMoney(5.00);
-        String result = vendor.select("Candy");
+        String result = vendor.buy("Candy");
         assertEquals("Purchase successful!", result);
     }
 
     @Test
     public void gumPurchaseTest() {
         vendor.addMoney(5.00);
-        String result = vendor.select("Gum");
+        String result = vendor.buy("Gum");
         assertEquals("Purchase successful!", result);
     }
 
     @Test
     public void insufficientMoneyCandyPurchaseTest() {
-        String result = vendor.select("Candy");
+        String result = vendor.buy("Candy");
         assertEquals("Gimme more money", result);
     }
 
     @Test
     public void insufficientMoneyGumPurchaseTest() {
-        String result = vendor.select("Gum");
+        String result = vendor.buy("Gum");
         assertEquals("Gimme more money", result);
     }
 
@@ -84,7 +84,7 @@ public class VendorTest {
     public void outOfStockCandyPurchaseTest() {
         Vending vendorCandy = new Vending(0, 10);
         vendorCandy.addMoney(5.00);
-        String result = vendorCandy.select("Candy");
+        String result = vendorCandy.buy("Candy");
         assertEquals("Out of Stock :(", result);
     }
 
@@ -92,14 +92,14 @@ public class VendorTest {
     public void outOfStockGumPurchaseTest() {
         Vending vendorGum = new Vending(10, 0);
         vendorGum.addMoney(5.00);
-        String result = vendorGum.select("Gum");
+        String result = vendorGum.buy("Gum");
         assertEquals("Out of Stock :(", result);
     }
 
     @Test
     public void inValidItemPurchaseTest() {
         vendor.addMoney(5.00);
-        String result = vendor.select("Twix");
+        String result = vendor.buy("Twix");
         assertEquals("Sorry, don't know that item", result);
     }
 
@@ -107,9 +107,9 @@ public class VendorTest {
     public void emptyCandyTest() {
         Vending vendingCandy = new Vending(3,10);
         vendingCandy.addMoney(10.00);
-        vendingCandy.select("Candy");
-        vendingCandy.select("Candy");
-        vendingCandy.select("Candy");
+        vendingCandy.buy("Candy");
+        vendingCandy.buy("Candy");
+        vendingCandy.buy("Candy");
         assertEquals(0, vendingCandy.getStock("Candy"));
     }
 
@@ -117,9 +117,9 @@ public class VendorTest {
     public void emptyGumTest() {
         Vending vendingGum = new Vending(10,3);
         vendingGum.addMoney(10.00);
-        vendingGum.select("Gum");
-        vendingGum.select("Gum");
-        vendingGum.select("Gum");
+        vendingGum.buy("Gum");
+        vendingGum.buy("Gum");
+        vendingGum.buy("Gum");
         assertEquals(0, vendingGum.getStock("Gum"));
     }
 
@@ -127,12 +127,12 @@ public class VendorTest {
     public void emptyBothTest() {
         Vending vendingBoth = new Vending(3,3);
         vendingBoth.addMoney(10.00);
-        vendingBoth.select("Gum");
-        vendingBoth.select("Gum");
-        vendingBoth.select("Gum");
-        vendingBoth.select("Candy");
-        vendingBoth.select("Candy");
-        vendingBoth.select("Candy");
+        vendingBoth.buy("Gum");
+        vendingBoth.buy("Gum");
+        vendingBoth.buy("Gum");
+        vendingBoth.buy("Candy");
+        vendingBoth.buy("Candy");
+        vendingBoth.buy("Candy");
         assertEquals(0, vendingBoth.getStock("Gum"));
         assertEquals(0, vendingBoth.getStock("Candy"));
     }
@@ -327,5 +327,37 @@ public class VendorTest {
     public void removeNonexistentItemTest() {
         String result = vendor.removeItem("Cola");
         assertEquals("Cola doesn't exist :(", result);
+    }
+
+    @Test
+    public void mostPopularSingleItemTest() {
+        vendor.addMoney(5.00);
+        vendor.buy("Candy");
+        vendor.buy("Gum");
+        vendor.buy("Gum");
+        vendor.buy("Gum");
+        String result = vendor.getMostPopular();
+        assertEquals("The most popular item(s): Gum with 3 purchases!", result);
+    }
+
+    @Test
+    public void mostPopularItemNoPurchaseTest() {
+        String result = vendor.getMostPopular();
+        assertEquals("No purchases :(", result);
+    }
+
+    @Test
+    public void mostPopularMultipleItemTest() {
+        vendor.addMoney(10.00);
+        vendor.buy("Candy");
+        vendor.buy("Candy");
+        vendor.buy("Candy");
+        vendor.buy("Candy");
+        vendor.buy("Gum");
+        vendor.buy("Gum");
+        vendor.buy("Gum");
+        vendor.buy("Gum");
+        String result = vendor.getMostPopular();
+        assertEquals("The most popular item(s): Candy, Gum with 4 purchases!", result);
     }
 }

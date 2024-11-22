@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -41,7 +43,7 @@ class Vending {
      * @param name The name of the item to purchase ("Candy" or "Gum")
      * @return A string
      */
-    String select (String name) {
+    String buy (String name) {
         if (Stock.containsKey(name)) {
             Item item = Stock.get(name);
             if (balance >= item.price) {
@@ -151,6 +153,29 @@ class Vending {
             }
         } else {
             return name + " doesn't exist :(";
+        }
+    }
+
+    String getMostPopular() {
+        int maxPurchases = -1;
+        List<String> popularItems = new ArrayList<>();
+
+        for (String itemName : Stock.keySet()) {
+            Item item = Stock.get(itemName);
+            int purchaseCount = item.getPurchaseCount();
+
+            if (purchaseCount > maxPurchases && purchaseCount > 0) {
+                maxPurchases = purchaseCount;
+                popularItems.clear();
+                popularItems.add(itemName);
+            } else if (purchaseCount == maxPurchases) {
+                popularItems.add(itemName);
+            }
+        }
+        if (popularItems.isEmpty()) {
+            return "No purchases :(";
+        } else {
+            return "The most popular item(s): " + String.join(", ", popularItems) + " with " + maxPurchases + " purchases!";
         }
     }
 
