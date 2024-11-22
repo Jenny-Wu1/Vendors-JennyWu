@@ -196,6 +196,23 @@ class Vending {
         }
     }
 
+    void markBestSeller(String itemName) {
+        if (Stock.containsKey(itemName)) {
+            Stock.get(itemName).setBestseller(true);
+        } else {
+            System.out.println(itemName + " doesn't exist :(");
+        }
+    }
+
+    void updateBestsellers(int threshold) {
+        for (String itemName : Stock.keySet()) {
+            Item item = Stock.get(itemName);
+            if (item.getPurchaseCount() >= threshold) {
+                item.setBestseller(true);
+            }
+        }
+    }
+
 }
 
 class Examples {

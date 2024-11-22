@@ -5,6 +5,7 @@ class Item {
     int purchaseCount;
     String description;
     double discount;
+    boolean bestseller;
 
     Item(double price, int numPieces, String description) {
         this.price = price;
@@ -13,6 +14,7 @@ class Item {
         purchaseCount = 0;
         this.description = description;
         discount = 0;
+        bestseller = false;
     }
 
     Item(double price, int numPieces) {
@@ -22,6 +24,7 @@ class Item {
         this.purchaseCount = 0;
         this.description = "Snack/Drink";
         discount = 0;
+        bestseller = false;
     }
 
     void restock(int amount) {
@@ -63,5 +66,13 @@ class Item {
 
     double getDiscountedPrice() {
         return price * (1 - discount / 100);
+    }
+
+    boolean isBestseller() {
+        return  bestseller;
+    }
+
+    void setBestseller(boolean bestseller) {
+        this.bestseller = bestseller;
     }
 }

@@ -419,4 +419,20 @@ public class VendorTest {
         assertEquals(1.25, candy.getDiscountedPrice());
     }
 
+    @Test
+    public void candySetBestsellerTest() {
+        vendor.markBestSeller("Candy");
+        Item candy = vendor.Stock.get("Candy");
+        assertTrue(candy.isBestseller());
+    }
+
+    @Test
+    public void updateBestsellerUsingThreshold() {
+        vendor.Stock.get("Candy").purchase(8);
+        vendor.Stock.get("Gum").purchase(3);
+        vendor.updateBestsellers(5);
+        assertTrue(vendor.Stock.get("Candy").isBestseller());
+        assertFalse(vendor.Stock.get("Gum").isBestseller());
+    }
+
 }
